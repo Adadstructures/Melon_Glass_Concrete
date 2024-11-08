@@ -1,0 +1,8 @@
+streamlit
+numpy
+optuna
+pickle-mixin
+shap
+matplotlib
+scikit-learn
+xgboost
