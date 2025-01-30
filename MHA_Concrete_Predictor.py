@@ -68,8 +68,8 @@ if option == 'Predict Mechanical Properties':
             model_file = 'Compressive_model.pkl'
         elif property_type == 'Flexural Strength':
             model_file = 'Flexure_model.pkl'
-        else:  # Tensile Strength
-            model_file = 'Split Tensile_model.pkl'
+        else:  # Split Tensile Strength
+            model_file = 'Tensile_model.pkl'
 
         # Load the selected model
         with open(model_file, 'rb') as model_file_obj:
