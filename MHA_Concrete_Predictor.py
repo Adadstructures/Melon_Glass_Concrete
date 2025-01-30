@@ -145,7 +145,7 @@ elif option == 'Optimize Mix':
             compressive_model = pickle.load(file)
         with open('Flexure_model.pkl', 'rb') as file:
             flexural_model = pickle.load(file)
-        with open('Split Tensile_model.pkl', 'rb') as file:
+        with open('Tensile_model.pkl', 'rb') as file:
             tensile_model = pickle.load(file)
         with open('scaler.pkl', 'rb') as file:
             scaler = pickle.load(file)
