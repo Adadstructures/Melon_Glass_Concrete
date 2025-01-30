@@ -36,7 +36,7 @@ if option == 'Predict Mechanical Properties':
     # Dropdown to select the concrete property (Compressive, Flexural, Tensile)
     property_type = st.selectbox(
         'Select the concrete property to predict',
-        ['Compressive Strength', 'Flexural Strength', 'Tensile Strength']
+        ['Compressive Strength', 'Flexural Strength', 'Split Tensile Strength']
     )
 
     # Make prediction based on the selected model type
@@ -52,10 +52,10 @@ if option == 'Predict Mechanical Properties':
                 flexural_strength = 2.516 + (-0.00093) * cement_content + (-0.00425) * melon_husk_ash + (0.00518) * recycled_waste_glass + (0.045) * concrete_age
                 st.markdown(f"<h2 style='text-align: left; color: green; font-size: 32px;'>Flexural Strength: {flexural_strength:.3f} MPa</h2>", unsafe_allow_html=True)
 
-            elif property_type == 'Tensile Strength':
-                # Calculate Tensile Strength using empirical formula
+            elif property_type == 'Split Tensile Strength':
+                # Calculate Split Tensile Strength using empirical formula
                 tensile_strength = 1.485 + (0.00028) * cement_content + (0.00019) * melon_husk_ash + (-0.00047) * recycled_waste_glass + (0.043) * concrete_age
-                st.markdown(f"<h2 style='text-align: left; color: green; font-size: 32px;'>Tensile Strength: {tensile_strength:.3f} MPa</h2>", unsafe_allow_html=True)
+                st.markdown(f"<h2 style='text-align: left; color: green; font-size: 32px;'>Split Tensile Strength: {tensile_strength:.3f} MPa</h2>", unsafe_allow_html=True)
 
     elif model_type == 'Machine Learning Model':
         # Load the model and the shared scaler
@@ -69,7 +69,7 @@ if option == 'Predict Mechanical Properties':
         elif property_type == 'Flexural Strength':
             model_file = 'Flexure_model.pkl'
         else:  # Tensile Strength
-            model_file = 'Tensile_model.pkl'
+            model_file = 'Split Tensile_model.pkl'
 
         # Load the selected model
         with open(model_file, 'rb') as model_file_obj:
@@ -116,7 +116,7 @@ elif option == 'Optimize Mix':
     # Dropdown to select the concrete property to optimize (Compressive, Flexural, Tensile)
     property_type_for_optimization = st.selectbox(
         'Select the concrete property to optimize',
-        ['Compressive Strength', 'Flexural Strength', 'Tensile Strength']
+        ['Compressive Strength', 'Flexural Strength', 'Split Tensile Strength']
     )
 
     # Input fields for target values
@@ -127,7 +127,7 @@ elif option == 'Optimize Mix':
         min_value, max_value, step = 13.72, 37.43, 0.1
     elif property_type_for_optimization == 'Flexural Strength':
         min_value, max_value, step = 2.01, 4.57, 0.1
-    else:  # Tensile Strength
+    else:  # Split Tensile Strength
         min_value, max_value, step = 1.45, 4.21, 0.1
     
     # Input field for target strength with dynamic range
@@ -145,7 +145,7 @@ elif option == 'Optimize Mix':
             compressive_model = pickle.load(file)
         with open('Flexure_model.pkl', 'rb') as file:
             flexural_model = pickle.load(file)
-        with open('Tensile_model.pkl', 'rb') as file:
+        with open('Split Tensile_model.pkl', 'rb') as file:
             tensile_model = pickle.load(file)
         with open('scaler.pkl', 'rb') as file:
             scaler = pickle.load(file)
@@ -236,7 +236,7 @@ elif option == 'Optimize Mix':
         carbon_diff = (total_carbon_footprint - target_carbon_footprint) ** 50
         
         # Cement penalty: incentivize reducing cement usage
-        cement_penalty = (cement / 565.0) ** 50
+        cement_penalty = (cement / 565.0) 
         
         # Maximize the use of MHA and RWG, by adding a reward for higher values
         mha_reward = (mha / 85.0)  ** 5
